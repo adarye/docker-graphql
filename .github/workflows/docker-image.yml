@@ -30,17 +30,19 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        echo "new version $NEW_VERSION"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         
     - name: Build docker image
+      env: 
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker build -t adarye/docker-graphql:0.0.2 .
+        docker build -t adarye/docker-graphql:$NEW_VERSION .
         docker build -t adarye/docker-graphql:latest . 
 
     - name: Push docker image
+      env: 
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker push adarye/docker-graphql:0.0.2
+        docker push adarye/docker-graphql:$NEW_VERSION
         docker push adarye/docker-graphql:latest
