@@ -17,13 +17,12 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: Docker login
-      env: 
-        DOCKER_USER: adarye
-        DOCKER_PASSWORD: dckr_pat_opgtFr5ZBfZO_MSwCTC5onw37Zg
+    - name: Docker Login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        
       run: |
-        echo "logging"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        echo "logged"
     #- name: Build the Docker image
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
